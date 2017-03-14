@@ -1,20 +1,19 @@
 import { renderComponent, expect } from '../test_helper';
 import App from '../../src/components/app';
 
-// use 'describe' to group together similar tests.  The string doesnt' matter; it's just what
-// is being put into the report
+// Use 'describe' to group together similar tests
 describe('App', () => {
+  let component;
 
-	// Use 'it' to test a single attribute of a target.  Again, the string is only used for the report
-	it('shows the correct text', () => {
+  beforeEach(() => {
+    component = renderComponent(App);
+  });
 
-		// create an instance of App => renderComponent is from our helper
-		const component = renderComponent(App);
+  it('shows a comment box', () => {
+    expect(component.find('.comment-box')).to.exist;
+  });
 
-		// Use 'expect' to make an assertion about a target.  Our App component is our 'target' in this case
-		expect(component).to.contain('React simple starter');
-
-	});
-
+  it('shows a comment list', () => {
+    expect(component.find('.comment-list')).to.exist;
+  });
 });
-

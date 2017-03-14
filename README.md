@@ -55,8 +55,62 @@ import CommentBox from '../../src/components/comment_box';
 ```
 
 ## Lecture 9: Comment Box Tests
-- we need to find the appropriate matchers
+- we need to find the appropriate matchers: github repo [https://github.com/chaijs/chai-jquery](https://github.com/chaijs/chai-jquery)
+- 
 
+## Lecture 10: Testing Class Names
+- We wrote the CommentBox component
+
+## Lecture 11: Using beforeEach to Condense Tests
+- We wrote a beforeEach so that 'component' is defined before each 'it' is run.  One snag was defining the component;
+we had to define the component outside of the beforeEach (scope) and then re-assign it.
+```js
+describe('CommentBox', () => {
+	let component; // component defined outside of the beforeEach
+	beforeEach(() => {
+		component = renderComponent(CommentBox); // component is assigned to the renderComponent
+	})
+
+	it('has the correct class', () => {
+		expect(component).to.have.class('comment-box');
+	});
+
+	it('has a text area', () => {
+		expect(component.find('textarea')).to.exist;
+	});
+
+	it('has a button', () => {
+		expect(component.find('button')).to.exist;
+	});
+});
+```
+
+## Lecture 12: Expecting Child Elements
+
+
+## Lecture 13: Simulating Events
+- the beforeEach's stack up.  So the first beforeEach is run and then the second one in the nested describe (when
+running the it's)
+
+## Lecture 14: Testing Controlled Components
+
+## Lecture 15: Form Submit Event
+- We simulated a submission: `component.simulate('submit');`
+
+
+## Lecture 16: Stub Comment List
+- if ever the tests just aren't passing for some reason, quit the testing process (Ctrl + C) and then restart it
+`npm run test:watch`
+  - I was playing around for like 45 minutes on something that didn't actually have anything wrong.
+
+
+## Lecture 17: Expectations on Content
+
+## Lecture 18: Assertions with Lists
+
+## Lecture 19:
+
+## Lecture 20:
 
 
 
