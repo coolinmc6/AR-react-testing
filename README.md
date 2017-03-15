@@ -107,8 +107,11 @@ running the it's)
 ## Lecture 17: Expectations on Content
 
 ## Lecture 18: Assertions with Lists
+- finished L18
+- Key snag: `function mapStateToProps()` takes an argument, `state`!  I couldn't figure out why
+Grider's passed and my tests didn't...
 
-## Lecture 19:
+## Lecture 19: Testing Action Creators
 
 ## Lecture 20:
 
