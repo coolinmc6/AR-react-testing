@@ -112,8 +112,56 @@ running the it's)
 Grider's passed and my tests didn't...
 
 ## Lecture 19: Testing Action Creators
+- Need to create action creator and reducer for comments
+- We built the shell of the action creator, `saveComment()`, in `/action/index.js` and we created
+a types.js file for all of our action types.
+- The bulk of our code setup for the action creator was in `./test/actions/actions_test.js`.  This
+is what we did:
+```js
+import { expect } from '../test_helper';
+import { SAVE_COMMENT } from '../../src/actions/types';
+import { saveComment } from '../../src/actions';
 
-## Lecture 20:
+describe('actions', () => {
+	describe('saveComment', () => {
+		it('has the correct type', ()=> {
+			const action = saveComment();
+			expect(action.type).to.equal(SAVE_COMMENT)
+		});
+		it('it has the correct payload', () => {
+			const action = saveComment('new comment');
+			expect(action.payload).to.equal('new comment');
+		});
+	});
+});
+```
+- we didn't import renderComponent because we are testing an action, we aren't rendering any 
+components
+- we are bringing in our action type `SAVE_COMMENT` and our `saveComment` action creator
+- We created a describe for all actions and then within that, our structure will have a separate
+describe for each action creator
+- Where I struggled doing this on my own is making the leap from what we need to test to what it
+will ultimately be.  So if we are checking the two main parts of the action, the type and the 
+payload, we would need to have to look ahead somewhat to know what we want to test (at least
+for the payload).
+- Right now, we are setting a const `action` equal to the results of our new action creator, 
+saveComment().  I think I was thrown off by the fact that it was just a shell of an action creator, 
+we didn't actually do anything.  But it's a safe assumption that our action creator will 
+return an action, a JS object with a type and payload properties, and the type MUST be equal
+to SAVE_COMMENT because that's what we want.
+- The second it statement, having the correct payload, has us make the assumption that our action
+creator will take a string and that will be the payload.
+
+## Lecture 20: Action Creator Shortcuts
+- In trying to set-up the action creator by myself, I struggled a bit but here are the major steps
+to make CommentBox a container:
+  1. import { connect } from React Redux
+  1. instead of bringing in bindActionCreators, we did this: `import * as actions from '../actions';`
+  which allows us to import all of our actions
+  1. when we export everything, we simply put `actions` as our mapDispatchToProps argument as
+  such: `export default connect(null, actions)(CommentBox)`
+
+
 
 
 
