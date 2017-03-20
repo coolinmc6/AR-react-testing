@@ -161,6 +161,81 @@ to make CommentBox a container:
   1. when we export everything, we simply put `actions` as our mapDispatchToProps argument as
   such: `export default connect(null, actions)(CommentBox)`
 
+## Lecture 24: Purpose of Mocha and Chai
+- 'expect' comes from chai (see test_helper.js)
+- Mocha loads the test, runs them one by one, and cleans up after each
+- Chai provides helpers for asserting certain properties about the test subject
+  - that is the documentation that we were referencing the whole time
+  - we were using chai jQuery
+
+## Lectures 25 - 31
+- The first piece of set-up that we are trying to do is to allow jQuery to work in the command line
+where it doesn't have access to the DOM like it would in a browser
+- We bring in jsdom => we essentially need to create a fake HTML document
+- 'global' in Node = 'window' in the browser
+
+#### jsdom
+
+```js
+import jsom from 'jsdom';
+
+global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
+global.window = global.document.defaultView;
+```
+  - we are importing jsdom
+  - creating a fake html document but passing our mini html doc to jsdom.
+  - the `global.window` line is from the jsdom docs...
+- We import jQuery but instead of just '$', we do '_$' so that jQuery doesn't automatically try
+to connect itself to the DOM; we want to tell it what to connect it to
+  - we are essentially telling jQuery what to grab our manufactured, fake html doc
+
+#### jQuery
+```js
+import jsom from 'jsdom';
+import jquery from 'jquery';  // NEW
+
+
+global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
+global.window = global.document.defaultView;
+const $ = jquery(global.window);  // NEW
+```
+  - importing of jQuery
+  - defining the `$` function so that we can use jQuery but on our fake html doc
+
+#### renderComponent()
+- the component class we are referencing the component that WE build
+- we use the react addons for the test utils
+- whenever we call renderComponent, we are rendering our component into a document
+- we are going to use ReactDOM to get a reference to the HTML that our component produced
+- and then we are going to wrap in a jQuery reference.  THe purpose of the jQuery is to get access
+to all of the really useful chai-jquery
+```js
+import jsdom from 'jsdom';
+import jquery from 'jquery';
+import TestUtils from 'react-addons-test-utils';  // NEW
+import ReactDOM from 'react-dom';  // NEW
+
+global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
+global.window = global.document.defaultView;
+const $ = jquery(global.window);
+
+// NEW (everything below)
+function renderComponent(ComponentClass) {
+  const componentInstance = TestUtils.renderIntoDocument(<ComponentClass />);
+
+  return $(ReactDom.findDOMNode(componentInstance)); // produces HTML
+}
+```
+  - we import TestUtils; see the [Test Utilities docs](https://facebook.github.io/react/docs/test-utils.html) for more
+
+- I should re-visit these notes, starting with around L28 or so...my errors were not matching
+the ones in the lectures BUT after importing chaiJquery, everything seemed to click.
+
+
+
+
+
+
 
 
 
